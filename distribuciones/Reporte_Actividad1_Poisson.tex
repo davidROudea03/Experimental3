@@ -1,0 +1,388 @@
+\documentclass[12pt,a4paper]{article}
+
+% Paquetes
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% Configuración de página
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+% Información del documento
+\title{\textbf{Actividad 1: Distribución de Poisson} \\
+\large{Análisis de Radiación Natural con Contador Geiger}}
+\author{[Nombre del Estudiante] \\
+[Código] \\
+Física Experimental III \\
+Universidad de Antioquia}
+\date{[Fecha]}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción}
+
+La distribución de Poisson es un modelo probabilístico fundamental para describir eventos discretos que ocurren de manera independiente en intervalos de tiempo o espacio fijos. Este tipo de distribución es especialmente útil en física para modelar procesos de desintegración radiactiva, donde las emisiones de partículas son eventos aleatorios e independientes.
+
+En esta actividad se analizan datos experimentales de radiación natural capturados mediante un contador Geiger remoto, con el objetivo de verificar si el proceso sigue una distribución de Poisson y comparar los resultados experimentales con datos simulados y predicciones teóricas.
+
+\subsection{Marco Teórico}
+
+La función de masa de probabilidad de Poisson está dada por:
+
+\begin{equation}
+P(k; \lambda) = \frac{\lambda^k e^{-\lambda}}{k!}
+\end{equation}
+
+donde:
+\begin{itemize}
+    \item $k$ es el número de eventos observados
+    \item $\lambda$ es el número promedio de eventos por intervalo (parámetro de la distribución)
+    \item Para una distribución de Poisson: $E[X] = \text{Var}(X) = \lambda$
+\end{itemize}
+
+\section{Metodología}
+
+\subsection{Toma de Datos}
+
+\begin{itemize}
+    \item \textbf{Fuente de datos:} Contador Geiger remoto (\url{https://luramire.github.io/GeigerCounter.io})
+    \item \textbf{Fecha:} 26 de noviembre de 2025
+    \item \textbf{Duración:} 30 minutos
+    \item \textbf{Intervalo de muestreo:} 10 segundos
+    \item \textbf{Franja horaria:} [COMPLETAR CON LA HORA DE TOMA DE DATOS]
+\end{itemize}
+
+Los datos mostrados en la interfaz web corresponden a cuentas acumuladas $n_i$. Para obtener las cuentas por intervalo, se calculó:
+
+\begin{equation}
+\Delta n_i = n_{i+1} - n_i
+\end{equation}
+
+\subsection{Procesamiento de Datos}
+
+El análisis incluyó los siguientes pasos:
+
+\begin{enumerate}
+    \item \textbf{Limpieza de datos:} Extracción de valores numéricos válidos y eliminación de mensajes del sistema
+    \item \textbf{Detección de outliers:} Aplicación del criterio de cuartiles (IQR)
+    \item \textbf{Cálculo de parámetros:} Determinación de $\lambda$ experimental
+    \item \textbf{Simulación:} Generación de datos sintéticos con distribución de Poisson
+    \item \textbf{Análisis comparativo:} Evaluación estadística y gráfica
+\end{enumerate}
+
+\section{Resultados}
+
+\subsection{Análisis Preliminar y Detección de Outliers}
+
+Se aplicó el criterio de cuartiles para identificar datos atípicos. Un dato se considera outlier si:
+
+\begin{equation}
+x < Q_1 - 1.5 \times IQR \quad \text{o} \quad x > Q_3 + 1.5 \times IQR
+\end{equation}
+
+donde $IQR = Q_3 - Q_1$ es el rango intercuartílico.
+
+\textbf{Resultados:}
+\begin{itemize}
+    \item Total de datos iniciales: [COMPLETAR]
+    \item Datos atípicos detectados: [COMPLETAR]
+    \item Datos finales (limpios): [COMPLETAR]
+    \item Porcentaje removido: [COMPLETAR]\%
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{boxplot_outliers.png}
+    \caption{Boxplot mostrando la distribución de datos y outliers detectados mediante el criterio IQR. El panel izquierdo muestra el boxplot tradicional con límites de cuartiles, mientras que el panel derecho presenta el histograma con los outliers marcados en rojo.}
+    \label{fig:boxplot}
+\end{figure}
+
+\subsection{Parámetros Estadísticos}
+
+\begin{table}[H]
+\centering
+\caption{Resumen de parámetros estadísticos para datos experimentales, simulados y teóricos}
+\label{tab:resumen}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Parámetro} & \textbf{Experimental} & \textbf{Simulado} & \textbf{Teórico (Poisson)} \\
+\midrule
+Total de datos & [VALOR] & [VALOR] & - \\
+Media ($\lambda$) & [VALOR] $\pm$ [ERROR] & [VALOR] & [VALOR] \\
+Desviación estándar & [VALOR] & [VALOR] & $\sqrt{\lambda}$ = [VALOR] \\
+Varianza & [VALOR] & [VALOR] & $\lambda$ = [VALOR] \\
+Varianza/Media & [VALOR] & [VALOR] & 1.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Análisis:} La razón varianza/media cercana a 1 es característica de procesos que siguen distribución de Poisson, donde $\text{Var}(X) = E[X] = \lambda$.
+
+\subsection{Comparación: Datos Experimentales vs Simulados}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{comparacion_series_temporales.png}
+    \caption{Series temporales de cuentas de radiación. (Superior) Datos experimentales con media y desviación estándar. (Centro) Datos simulados siguiendo distribución de Poisson. (Inferior) Comparación directa entre ambos conjuntos de datos.}
+    \label{fig:series}
+\end{figure}
+
+\textbf{Similitudes:}
+\begin{itemize}
+    \item Ambos conjuntos fluctúan alrededor de valores medios similares ($\lambda \approx$ [VALOR])
+    \item La dispersión es comparable (desviación estándar similar)
+    \item No se observan tendencias sistemáticas en ninguno de los casos
+\end{itemize}
+
+\textbf{Diferencias:}
+\begin{itemize}
+    \item [COMPLETAR CON OBSERVACIONES ESPECÍFICAS]
+\end{itemize}
+
+\subsection{Análisis de Residuos}
+
+Los residuos se calcularon como:
+
+\begin{equation}
+r_i = x_i - \bar{x}
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{analisis_residuos.png}
+    \caption{Análisis de residuos. Paneles superiores: residuos vs número de intervalo para datos experimentales (izquierda) y simulados (derecha). Paneles inferiores: histogramas de distribución de residuos. Las líneas naranjas indican $\pm 1\sigma$.}
+    \label{fig:residuos}
+\end{figure}
+
+\textbf{Conclusión sobre aleatoriedad:}
+
+Los residuos están distribuidos aleatoriamente si:
+\begin{itemize}
+    \item No presentan patrones sistemáticos (tendencias, periodicidades)
+    \item Están centrados en cero
+    \item Aproximadamente 68\% están dentro de $\pm 1\sigma$
+    \item Aproximadamente 95\% están dentro de $\pm 2\sigma$
+\end{itemize}
+
+\textbf{Resultado del test de rachas:}
+\begin{itemize}
+    \item Rachas experimentales: [VALOR]
+    \item Rachas simuladas: [VALOR]
+    \item Interpretación: [COMPLETAR]
+\end{itemize}
+
+\subsection{Histogramas y Distribución Teórica}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{histogramas_poisson.png}
+    \caption{Comparación entre histogramas normalizados y distribución de Poisson teórica. (Izquierda) Datos experimentales vs teórica. (Centro) Datos simulados vs teórica. (Derecha) Comparación completa de los tres conjuntos.}
+    \label{fig:histogramas}
+\end{figure}
+
+\textbf{Test Chi-cuadrado de bondad de ajuste:}
+\begin{itemize}
+    \item Estadístico $\chi^2$: [VALOR]
+    \item p-valor: [VALOR]
+    \item Interpretación: Si p-valor $> 0.05$, no hay evidencia suficiente para rechazar que los datos sigan una distribución de Poisson.
+\end{itemize}
+
+\subsection{Cálculo de Probabilidades}
+
+\subsubsection{Probabilidad de detectar entre 2 y 5 partículas en 10s}
+
+La probabilidad se calcula como:
+
+\begin{equation}
+P(2 \leq k \leq 5) = \sum_{k=2}^{5} \frac{\lambda^k e^{-\lambda}}{k!}
+\end{equation}
+
+\begin{table}[H]
+\centering
+\caption{Probabilidad de detectar entre 2 y 5 partículas en un intervalo de 10s}
+\label{tab:probabilidades}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Método} & \textbf{Probabilidad} & \textbf{Porcentaje} \\
+\midrule
+Datos experimentales & [VALOR] & [VALOR]\% \\
+Datos simulados & [VALOR] & [VALOR]\% \\
+Distribución teórica & [VALOR] & [VALOR]\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Desglose por valor de k:}
+
+\begin{table}[H]
+\centering
+\caption{Probabilidades individuales para cada valor de k}
+\label{tab:prob_individual}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+\textbf{k} & \textbf{P(k) Teórica} & \textbf{Frec. Experimental} & \textbf{Frec. Simulada} \\
+\midrule
+2 & [VALOR] & [VALOR] & [VALOR] \\
+3 & [VALOR] & [VALOR] & [VALOR] \\
+4 & [VALOR] & [VALOR] & [VALOR] \\
+5 & [VALOR] & [VALOR] & [VALOR] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Eventos esperados en 3 minutos}
+
+Para un intervalo de 180 segundos (18 intervalos de 10s):
+
+\begin{equation}
+\text{Eventos esperados} = P(2 \leq k \leq 5) \times 18
+\end{equation}
+
+\textbf{Resultados:}
+\begin{itemize}
+    \item Basado en datos experimentales: [VALOR] eventos
+    \item Basado en datos simulados: [VALOR] eventos
+    \item Basado en distribución teórica: [VALOR] eventos
+\end{itemize}
+
+\textbf{Tasa total de detección:}
+\begin{itemize}
+    \item Total de partículas esperadas en 180s: [VALOR]
+    \item Tasa: [VALOR] partículas/segundo = [VALOR] partículas/minuto
+\end{itemize}
+
+\section{Análisis y Discusión}
+
+\subsection{Validez de la Distribución de Poisson}
+
+[COMPLETAR con análisis de:]
+\begin{itemize}
+    \item ¿Los datos experimentales siguen razonablemente una distribución de Poisson?
+    \item ¿Qué indica la razón varianza/media?
+    \item ¿Qué dice el test Chi-cuadrado?
+    \item ¿Hay desviaciones significativas? ¿A qué pueden deberse?
+\end{itemize}
+
+\subsection{Comparación Experimental vs Simulado}
+
+[COMPLETAR con análisis de:]
+\begin{itemize}
+    \item Concordancia entre datos experimentales y simulados
+    \item Diferencias observadas y posibles causas
+    \item Validación del modelo de Poisson
+\end{itemize}
+
+\subsection{Aleatoriedad de los Datos}
+
+[COMPLETAR con análisis de:]
+\begin{itemize}
+    \item Comportamiento de los residuos
+    \item Presencia o ausencia de patrones sistemáticos
+    \item Test de rachas
+    \item Implicaciones físicas
+\end{itemize}
+
+\subsection{Limitaciones del Experimento}
+
+[COMPLETAR considerando:]
+\begin{itemize}
+    \item Tiempo de muestreo limitado
+    \item Resolución temporal (intervalos de 10s)
+    \item Posibles fuentes de error
+    \item Condiciones ambientales
+\end{itemize}
+
+\section{Conclusiones}
+
+[COMPLETAR con conclusiones sobre:]
+
+\begin{enumerate}
+    \item \textbf{Ajuste a Poisson:} [Evaluar qué tan bien los datos experimentales se ajustan a la distribución de Poisson]
+
+    \item \textbf{Parámetro $\lambda$:} [Reportar el valor de $\lambda$ obtenido y su interpretación física]
+
+    \item \textbf{Simulación vs Experimento:} [Comparar la efectividad del modelo simulado]
+
+    \item \textbf{Probabilidades:} [Resumir los cálculos de probabilidad y eventos esperados]
+
+    \item \textbf{Aplicabilidad:} [Discutir la validez de usar Poisson para modelar radiación natural]
+\end{enumerate}
+
+\section{Referencias}
+
+\begin{itemize}
+    \item Bevington, P. R., \& Robinson, D. K. (2003). \textit{Data reduction and error analysis for the physical sciences}. McGraw-Hill.
+
+    \item Taylor, J. R. (1997). \textit{An introduction to error analysis: the study of uncertainties in physical measurements}. University Science Books.
+
+    \item Ross, S. M. (2014). \textit{Introduction to probability and statistics for engineers and scientists}. Academic Press.
+
+    \item Material de clase: Distribuciones de Poisson y T-student (2025).
+
+    \item Springer Link: \url{https://link.springer.com/book/10.1007/978-3-030-65140-4}
+\end{itemize}
+
+\appendix
+
+\section{Apéndice A: Datos Crudos}
+
+\subsection{Primeros 20 intervalos (datos limpios)}
+
+[INSERTAR TABLA CON PRIMEROS 20 VALORES]
+
+\subsection{Estadísticas completas}
+
+[INSERTAR TABLA COMPLETA DE ESTADÍSTICAS DESCRIPTIVAS]
+
+\section{Apéndice B: Código Python}
+
+El análisis completo se realizó en Python usando las siguientes bibliotecas:
+\begin{itemize}
+    \item \texttt{numpy}: Cálculos numéricos
+    \item \texttt{scipy.stats}: Distribuciones estadísticas
+    \item \texttt{matplotlib}: Visualización
+    \item \texttt{pandas}: Manejo de datos
+\end{itemize}
+
+El código completo está disponible en el notebook \texttt{Actividad1\_Poisson.ipynb}.
+
+\section{Apéndice C: Propagación de Errores}
+
+\subsection{Error en la media}
+
+El error estándar de la media se calcula como:
+
+\begin{equation}
+\sigma_{\bar{x}} = \frac{\sigma}{\sqrt{n}}
+\end{equation}
+
+donde $\sigma$ es la desviación estándar y $n$ el número de datos.
+
+\textbf{Resultado:}
+\begin{equation}
+\lambda = \bar{x} \pm \sigma_{\bar{x}} = \text{[VALOR]} \pm \text{[ERROR]}
+\end{equation}
+
+\subsection{Error en probabilidades}
+
+Para la probabilidad experimental:
+
+\begin{equation}
+P = \frac{k}{n} \quad \Rightarrow \quad \sigma_P = \sqrt{\frac{P(1-P)}{n}}
+\end{equation}
+
+donde $k$ es el número de eventos en el rango y $n$ el total de observaciones.
+
+\end{document}

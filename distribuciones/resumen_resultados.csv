@@ -1,0 +1,9 @@
+Parámetro,Experimental,Simulado,Teórico
+Total de datos,100,100,-
+Outliers removidos,0,-,-
+Media (λ),4.120,4.170,4.120
+Desviación estándar,2.332,2.080,2.030
+Varianza,5.440,4.324,4.120
+Varianza/Media,1.320,1.037,1.000
+P(2≤k≤5),0.5800,0.6700,0.6829
+Eventos en 3 min,10.44,12.06,12.29
